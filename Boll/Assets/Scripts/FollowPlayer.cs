@@ -9,15 +9,12 @@ public class FollowPlayer : MonoBehaviour {
     // Use this for initialization
     void Start () {
         offset = transform.position - player.transform.position; //offset mellan bollen och kameran
+        
 	}
 
     void LateUpdate()
     {
         transform.position = player.transform.position + offset; //flytta kameran varje frame
-    }
-	
-	// Update is called once per frame
-	void Update () {
         
-	}
+    }
 }
