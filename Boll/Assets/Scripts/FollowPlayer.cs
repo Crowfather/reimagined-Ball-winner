@@ -3,18 +3,22 @@ using System.Collections;
 
 public class FollowPlayer : MonoBehaviour {
 
-    public GameObject player;
+    GameObject player;
     private Vector3 offset;
+    private Vector3 velocity = Vector3.zero; //?????
 
     // Use this for initialization
     void Start () {
+
+        player = GameObject.Find("Player");
         offset = transform.position - player.transform.position; //offset mellan bollen och kameran
         
 	}
 
     void LateUpdate()
     {
-        transform.position = player.transform.position + offset; //flytta kameran varje frame
-        
+        //transform.position = player.transform.position + offset; //flytta kameran varje frame
+        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + offset, ref velocity, 0.3f); //Flyttar kameran all smooth-like
+        transform.LookAt(player.transform); //Kameran roterar så att den alltid tittar på bollen
     }
 }

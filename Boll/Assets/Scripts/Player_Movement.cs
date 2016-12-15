@@ -14,7 +14,7 @@ public class Player_Movement : MonoBehaviour {
     public float forceMultiplier;
     public float jumpPower;
     public LayerMask terrain;    
-    public float groundCheckRadius; //Storleken på sfären som kollar om bollen är på marken, bollen i sig har en radius på 0.25
+    public float groundCheckRadius; //Storleken på sfären som kollar om bollen är på marken, bollen i sig har en radius på 0.25 [scale 0.5]
     public float jumpSensitivity;
 
     [HideInInspector] public float moveHori;
@@ -31,8 +31,8 @@ public class Player_Movement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        moveHori = Mathf.Clamp((float) Math.Round(Input.acceleration.x - moveHoriOffset, 1), -0.5f, 0.5f); //max +- 0.5
-        moveVert = Mathf.Clamp((float) Math.Round(Input.acceleration.y - moveVertOffset, 1), -0.5f, 0.5f);
+        moveHori = (float) Math.Round(Input.acceleration.x - moveHoriOffset, 1);    //Avrunda input till en decimal
+        moveVert = (float) Math.Round(Input.acceleration.y - moveVertOffset, 1);
         moveUp = 0;
 
         grounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), groundCheckRadius, terrain); //kollar om bollen är på marken eller inte genom att 
@@ -72,7 +72,7 @@ public class Player_Movement : MonoBehaviour {
     {
         if (rb.velocity.magnitude > 1)
         {
-            Handheld.vibrate();
+            Handheld.Vibrate();
         }
     }
 }
