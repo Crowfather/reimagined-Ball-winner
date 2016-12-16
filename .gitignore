@@ -16,3 +16,6 @@ gradle-app.setting
 *.userprefs
 *.info
 *.bin
+*.suo
+Boll/Library/metadata/fa/*
+*.info
