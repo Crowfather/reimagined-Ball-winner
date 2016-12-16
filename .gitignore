@@ -17,5 +17,5 @@ gradle-app.setting
 *.info
 *.bin
 *.suo
-Boll/Library/metadata/fa/*
+Boll/Library/metadata/*
 *.info
