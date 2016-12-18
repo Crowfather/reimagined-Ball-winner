@@ -10,6 +10,9 @@ public class Player_Movement : MonoBehaviour {
     private bool grounded = false;
     private float moveHoriOffset;
     private float moveVertOffset;
+    private string currentLevel;
+
+    public int deathPlane;
 
     public float forceMultiplier;
     public float jumpPower;
@@ -26,8 +29,11 @@ public class Player_Movement : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         moveHoriOffset = Input.acceleration.x;  //  Kollar lutning när spelet börjar
-        moveVertOffset = Input.acceleration.y; 
-	}
+        moveVertOffset = Input.acceleration.y;
+
+        currentLevel = SceneManager.GetActiveScene().name;
+
+    }
 
     void FixedUpdate()
     {
@@ -61,18 +67,10 @@ public class Player_Movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (transform.position.y < -30) //starta om om bollen kommer för långt ner
+        if (transform.position.y < deathPlane) //starta om om bollen kommer för långt ner
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(currentLevel);
         }
 	    
 	}
-
-    void OnCollisionEnter()
-    {
-        if (rb.velocity.magnitude > 1)
-        {
-            Handheld.Vibrate();
-        }
-    }
 }
