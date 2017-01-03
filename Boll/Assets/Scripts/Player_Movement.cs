@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
 
-
 public class Player_Movement : MonoBehaviour {
 
     private Rigidbody rb;
@@ -19,6 +18,8 @@ public class Player_Movement : MonoBehaviour {
     public LayerMask terrain;    
     public float groundCheckRadius; //Storleken på sfären som kollar om bollen är på marken, bollen i sig har en radius på 0.25 [scale 0.5]
     public float jumpSensitivity;
+    public bool isCube = false;
+    public bool airControll = false;
 
     [HideInInspector] public float moveHori;
     [HideInInspector] public float moveVert;
@@ -32,7 +33,6 @@ public class Player_Movement : MonoBehaviour {
         moveVertOffset = Input.acceleration.y;
 
         currentLevel = SceneManager.GetActiveScene().name;
-
     }
 
     void FixedUpdate()
@@ -41,15 +41,17 @@ public class Player_Movement : MonoBehaviour {
         moveVert = (float) Math.Round(Input.acceleration.y - moveVertOffset, 1);
         moveUp = 0;
 
-        grounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), groundCheckRadius, terrain); //kollar om bollen är på marken eller inte genom att 
-        //Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckRadius, transform.position.z));    // rita en sfär runt och se om den rör vid specifikt
-                                                                                                                                                   //layer. All mark har terrain som layer
+        if (!isCube) grounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), groundCheckRadius, terrain); //kollar om bollen/kuben är på marken eller inte genom att 
+        else grounded = Physics.CheckBox(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(0.51f, 0.51f, 0.51f), Quaternion.identity, terrain); // rita en sfär/låda runt och se om den rör vid specifikt
+                                                                                                                                                                                         //layer. All mark har terrain som layer
+
+        //Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckRadius, transform.position.z));    
         if (grounded && Input.acceleration.z > jumpSensitivity)  //Om bollen är på marken och tillräcklig z-fart, hoppa
         {
             moveUp = 1;
         }
 
-        if (!grounded) //Ingen luft-kontroll
+        if (!grounded && !airControll) //Är i luften och har ingen luft-kontroll
         {
             moveHori = 0;
             moveVert = 0;
@@ -71,6 +73,5 @@ public class Player_Movement : MonoBehaviour {
         {
             SceneManager.LoadScene(currentLevel);
         }
-	    
 	}
 }
