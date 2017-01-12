@@ -5,6 +5,7 @@ public class CameraShake : MonoBehaviour {
 
     GameObject cam;
     public float shakeSensitivity;
+
     //Rigidbody rb;
 
 	// Use this for initialization
@@ -20,16 +21,25 @@ public class CameraShake : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
+        Vibration.Vibrate(1000);
         Debug.Log(other.relativeVelocity.magnitude);
 
         if (other.gameObject.CompareTag("Wall")) //vid kollision, kolla om det andra objektet är en vägg
         {
+            //Handheld.Vibrate();
             if (other.relativeVelocity.magnitude > shakeSensitivity) //kolla om kollisionen var kraftig nog
             {
                 float shakeForce = other.relativeVelocity.magnitude;// - shakeSensitivity;
                 StopAllCoroutines();
                 StartCoroutine(cameraShake(shakeForce));
+                Vibration.Vibrate(1000);
             }
+            if (other.relativeVelocity.magnitude < shakeSensitivity && other.relativeVelocity.magnitude > 0.3)
+            {
+                Vibration.Vibrate(500);
+            }
+
+
         }
     }
 

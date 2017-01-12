@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/boll.unity
+- path: C:/Users/crow/Desktop/Boll/Assets/VibrationPlugin/Examples/VibrationScene.unity
   isLoaded: 1
   isActive: 1

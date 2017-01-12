@@ -68,11 +68,4 @@ public class Player_Movement : MonoBehaviour {
 	    
 	}
 
-    void OnCollisionEnter()
-    {
-        if (rb.velocity.magnitude > 1)
-        {
-            Handheld.Vibrate();
-        }
-    }
 }
