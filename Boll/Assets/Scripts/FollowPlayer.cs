@@ -6,6 +6,7 @@ public class FollowPlayer : MonoBehaviour {
     GameObject player;
     private Vector3 offset;
     private Vector3 velocity = Vector3.zero; //?????
+    [HideInInspector] public bool lookAtPlayer = true;
 
     // Use this for initialization
     void Start () {
@@ -17,8 +18,7 @@ public class FollowPlayer : MonoBehaviour {
 
     void LateUpdate()
     {
-        //transform.position = player.transform.position + offset; //flytta kameran varje frame
         transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + offset, ref velocity, 0.3f); //Flyttar kameran all smooth-like
-        transform.LookAt(player.transform); //Kameran roterar så att den alltid tittar på bollen
+        if (lookAtPlayer) transform.LookAt(player.transform); //Kameran roterar så att den alltid tittar på bollen, om kameran inte skakar - se cameraShake
     }
 }
